@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.mx_media_player"
-    compileSdk = 34  // ← এটি 36 রাখুন
+    compileSdk = 36  // ← এটি 36 রাখুন
 
     defaultConfig {
     applicationId = "com.your_company.media_player"  // পরিবর্তন করো
     minSdk = flutter.minSdkVersion
-    targetSdk = 34
+    targetSdk = 36
     versionCode = 1
     versionName = "1.0"
 }

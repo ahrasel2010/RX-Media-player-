@@ -1,5 +1,5 @@
-name: mx_media_player
-description: A full-featured media player app inspired by MX Player.
+name: rx_media_player
+description: A full-featured media player app inspired by RX Player.
 version: 1.0.0+1
 
 environment:
@@ -8,17 +8,41 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # Video & Audio
   video_player: ^2.8.3
   just_audio: ^0.9.36
+
+  # Permissions
   permission_handler: ^11.3.0
+
+  # File system
   path: ^1.9.0
   path_provider: ^2.1.2
+
+  # Storage
   shared_preferences: ^2.2.2
+
+  # Thumbnail
+  video_thumbnail: ^0.5.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
 
+  # ✅ ADD THIS (logo)
+  flutter_launcher_icons: ^0.13.1
+
+# ✅ LOGO CONFIG
+flutter_icons:
+  android: true
+  ios: false
+  image_path: "assets/logo.png"
+
 flutter:
   uses-material-design: true
+
+  # ✅ assets folder register
+  assets:
+    - assets/logo.png

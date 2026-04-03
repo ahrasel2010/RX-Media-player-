@@ -14,7 +14,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   final MediaScannerService _scanner = MediaScannerService();
   bool _isScanning = false;
   late TabController _tabController;
@@ -46,15 +47,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         backgroundColor: const Color(0xFF111111),
         title: Row(children: [
           Container(
-            width: 32, height: 32,
+            width: 32,
+            height: 32,
             decoration: BoxDecoration(
-              color: AppTheme.primaryOrange,
-              borderRadius: BorderRadius.circular(8)),
-            child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 20),
+                color: AppTheme.primaryOrange,
+                borderRadius: BorderRadius.circular(8)),
+            child: const Icon(Icons.play_arrow_rounded,
+                color: Colors.white, size: 20),
           ),
           const SizedBox(width: 10),
-          const Text('MX Player', style: TextStyle(
-            color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)),
+          const Text('RX Player',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700)),
         ]),
         actions: [
           IconButton(
@@ -75,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             icon: const Icon(Icons.settings_rounded),
             onPressed: () async {
               await Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const SettingsScreen()));
+                  MaterialPageRoute(builder: (_) => const SettingsScreen()));
               setState(() {});
             },
           ),
@@ -86,31 +92,37 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         ),
       ),
       body: _isScanning
-          ? const Center(child: Column(
+          ? const Center(
+              child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircularProgressIndicator(color: AppTheme.primaryOrange),
                 SizedBox(height: 20),
                 Text('Scanning media files...',
-                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 15)),
+                    style:
+                        TextStyle(color: AppTheme.textSecondary, fontSize: 15)),
                 SizedBox(height: 8),
                 Text('Storage থেকে সব video ও audio খোঁজা হচ্ছে...',
-                  style: TextStyle(color: Colors.white24, fontSize: 12)),
+                    style: TextStyle(color: Colors.white24, fontSize: 12)),
               ],
             ))
           : TabBarView(
               controller: _tabController,
               children: [
-                VideoListScreen(videoFiles: _scanner.videoFiles, onRefresh: _scanMedia),
-                AudioListScreen(audioFiles: _scanner.audioFiles, onRefresh: _scanMedia),
+                VideoListScreen(
+                    videoFiles: _scanner.videoFiles, onRefresh: _scanMedia),
+                AudioListScreen(
+                    audioFiles: _scanner.audioFiles, onRefresh: _scanMedia),
               ],
             ),
-      floatingActionButton: _isScanning ? null : FloatingActionButton(
-        onPressed: _scanMedia,
-        backgroundColor: AppTheme.primaryOrange,
-        tooltip: 'Scan again',
-        child: const Icon(Icons.refresh_rounded, color: Colors.white),
-      ),
+      floatingActionButton: _isScanning
+          ? null
+          : FloatingActionButton(
+              onPressed: _scanMedia,
+              backgroundColor: AppTheme.primaryOrange,
+              tooltip: 'Scan again',
+              child: const Icon(Icons.refresh_rounded, color: Colors.white),
+            ),
     );
   }
 }
@@ -126,33 +138,36 @@ class MediaSearchDelegate extends SearchDelegate<String> {
 
   @override
   ThemeData appBarTheme(BuildContext context) => Theme.of(context).copyWith(
-    appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF111111)),
-    inputDecorationTheme: const InputDecorationTheme(
-      hintStyle: TextStyle(color: AppTheme.textSecondary),
-      border: InputBorder.none,
-    ),
-    textTheme: const TextTheme(
-      titleLarge: TextStyle(color: Colors.white, fontSize: 16)),
-  );
+        appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF111111)),
+        inputDecorationTheme: const InputDecorationTheme(
+          hintStyle: TextStyle(color: AppTheme.textSecondary),
+          border: InputBorder.none,
+        ),
+        textTheme: const TextTheme(
+            titleLarge: TextStyle(color: Colors.white, fontSize: 16)),
+      );
 
   @override
   List<Widget> buildActions(BuildContext context) => [
-    if (query.isNotEmpty)
-      IconButton(icon: const Icon(Icons.clear), onPressed: () => query = ''),
-  ];
+        if (query.isNotEmpty)
+          IconButton(
+              icon: const Icon(Icons.clear), onPressed: () => query = ''),
+      ];
 
   @override
   Widget buildLeading(BuildContext context) => IconButton(
-    icon: const Icon(Icons.arrow_back),
-    onPressed: () => close(context, ''),
-  );
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () => close(context, ''),
+      );
 
   List<MediaFile> get _filtered {
     if (query.trim().isEmpty) return [...videos, ...audios];
     final q = query.toLowerCase();
-    return [...videos, ...audios].where((f) =>
-      f.name.toLowerCase().contains(q) ||
-      (f.artist?.toLowerCase().contains(q) ?? false)).toList();
+    return [...videos, ...audios]
+        .where((f) =>
+            f.name.toLowerCase().contains(q) ||
+            (f.artist?.toLowerCase().contains(q) ?? false))
+        .toList();
   }
 
   @override
@@ -166,13 +181,16 @@ class MediaSearchDelegate extends SearchDelegate<String> {
     if (results.isEmpty) {
       return Container(
         color: AppTheme.darkBg,
-        child: Center(child: Column(
+        child: Center(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.search_off_rounded, color: Colors.white24, size: 60),
+            const Icon(Icons.search_off_rounded,
+                color: Colors.white24, size: 60),
             const SizedBox(height: 12),
             Text(query.isEmpty ? 'কিছু লিখুন...' : '"$query" পাওয়া যায়নি',
-              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 15)),
+                style: const TextStyle(
+                    color: AppTheme.textSecondary, fontSize: 15)),
           ],
         )),
       );
@@ -186,37 +204,47 @@ class MediaSearchDelegate extends SearchDelegate<String> {
           final isVideo = file.type == MediaType.video;
           return ListTile(
             leading: Container(
-              width: 44, height: 44,
+              width: 44,
+              height: 44,
               decoration: BoxDecoration(
-                color: AppTheme.surfaceBg,
-                borderRadius: BorderRadius.circular(8)),
+                  color: AppTheme.surfaceBg,
+                  borderRadius: BorderRadius.circular(8)),
               child: Icon(
-                isVideo ? Icons.videocam_rounded : Icons.music_note_rounded,
-                color: AppTheme.primaryOrange, size: 22),
+                  isVideo ? Icons.videocam_rounded : Icons.music_note_rounded,
+                  color: AppTheme.primaryOrange,
+                  size: 22),
             ),
             title: Text(file.displayName,
-              style: const TextStyle(color: Colors.white, fontSize: 14),
-              maxLines: 1, overflow: TextOverflow.ellipsis),
-            subtitle: Text('${file.extension.toUpperCase()} • ${file.formattedSize}',
-              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 11)),
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis),
+            subtitle: Text(
+                '${file.extension.toUpperCase()} • ${file.formattedSize}',
+                style: const TextStyle(
+                    color: AppTheme.textSecondary, fontSize: 11)),
             trailing: Text(file.formattedDuration,
-              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 11)),
+                style: const TextStyle(
+                    color: AppTheme.textSecondary, fontSize: 11)),
             onTap: () {
               close(context, '');
               if (isVideo) {
                 final idx = videos.indexWhere((v) => v.path == file.path);
-                Navigator.push(ctx, MaterialPageRoute(
-                  builder: (_) => VideoPlayerScreen(
-                    file: file,
-                    playlist: videos.isEmpty ? [file] : videos,
-                    initialIndex: idx < 0 ? 0 : idx)));
+                Navigator.push(
+                    ctx,
+                    MaterialPageRoute(
+                        builder: (_) => VideoPlayerScreen(
+                            file: file,
+                            playlist: videos.isEmpty ? [file] : videos,
+                            initialIndex: idx < 0 ? 0 : idx)));
               } else {
                 final idx = audios.indexWhere((a) => a.path == file.path);
-                Navigator.push(ctx, MaterialPageRoute(
-                  builder: (_) => AudioPlayerScreen(
-                    file: file,
-                    playlist: audios.isEmpty ? [file] : audios,
-                    initialIndex: idx < 0 ? 0 : idx)));
+                Navigator.push(
+                    ctx,
+                    MaterialPageRoute(
+                        builder: (_) => AudioPlayerScreen(
+                            file: file,
+                            playlist: audios.isEmpty ? [file] : audios,
+                            initialIndex: idx < 0 ? 0 : idx)));
               }
             },
           );
