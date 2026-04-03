@@ -1,0 +1,2 @@
+C:/Users/ahras/mx_media_player/android/app/.cxx/debug/49266g3p/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/ahras/mx_media_player/android/app/.cxx/debug/49266g3p/armeabi-v7a/CMakeFiles/rebuild_cache.dir
